@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import StatCards from './components/Dashboard/StatCards'
 import TransactionForm from './components/transactions/TransactionForm'
+import TransactionList from './components/transactions/TransactionList'
 import './App.css'
 
 function App () {
@@ -15,6 +16,7 @@ function App () {
       <h1 className='title'>Expense Tracker</h1>
       <StatCards transactions={transactions} />
       <TransactionForm onSubmit={handleAdd} />
+      <TransactionList transactions={transactions} />
     </div>
   )
 }

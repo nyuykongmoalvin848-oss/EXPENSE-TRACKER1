@@ -15,8 +15,8 @@ function StatCards ({ transactions }) {
     { label: 'Total Income', value: formatCurrency(income) },
     { label: 'Total Expenses', value: formatCurrency(expense) },
     {
-      label: 'Net Balance',
-      value: formatCurrency(balance)
+      label: 'Balance',
+      value: formatCurrency(balance),
     }
   ]
 
