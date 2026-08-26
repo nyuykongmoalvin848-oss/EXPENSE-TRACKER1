@@ -98,6 +98,10 @@ body {
   cursor: pointer;
 }
 
+.budget-form {
+  max-width: 300px;
+}
+
 .list {
   list-style: none;
   padding: 0;
