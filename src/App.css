@@ -1,6 +1,6 @@
 :root {
   --bg-primary: #ffffff;
-  --bg-secondary: #e5e7eb;
+  --bg-secondary: #f3f4f6;
   --text-primary: #111827;
   --text-secondary: #6b7280;
   --accent: #3b82f6;
@@ -9,11 +9,23 @@
   --shadow: rgba(0, 0, 0, 0.1);
 }
 
+[data-theme='dark'] {
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --accent: #60a5fa;
+  --border: #374151;
+  --card-bg: #1f2937;
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
 body {
   margin: 0;
-  background: #f5f5f5;
+  background: var(--bg-secondary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-primary);
+  transition: background 0.3s, color 0.3s;
 }
 
 .wrap {
@@ -22,8 +34,25 @@ body {
   margin: 0 auto;
 }
 
-.title {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.theme-btn {
+  padding: 8px 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .cards {
@@ -52,6 +81,30 @@ body {
 .amount {
   font-size: 24px;
   font-weight: 700;
+}
+
+.dashboard {
+  margin-bottom: 24px;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.chart-title {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: var(--text-primary);
 }
 
 .form {
@@ -114,14 +167,15 @@ body {
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
+  background: var(--card-bg);
 }
 
 .list-item.income {
-  border-left: 4px solid var(--success);
+  border-left: 4px solid var(--border);
 }
 
 .list-item.expense {
-  border-left: 4px solid var(--danger);
+  border-left: 4px solid var(--border);
 }
 
 .list-item button {
@@ -130,4 +184,18 @@ body {
   color: var(--text-secondary);
   cursor: pointer;
   font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .wrap {
+    padding: 16px;
+  }
+
+  .charts {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
 }

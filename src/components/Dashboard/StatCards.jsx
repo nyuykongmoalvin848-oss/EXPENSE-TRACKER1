@@ -1,6 +1,6 @@
 import { formatCurrency } from '../../constants'
 
-function StatCards ({ transactions }) {
+function StatCards ({ transactions, budget }) {
   const income = transactions
     .filter((t) => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
@@ -10,14 +10,13 @@ function StatCards ({ transactions }) {
     .reduce((sum, t) => sum + t.amount, 0)
 
   const balance = income - expense
+  const budgetLeft = budget - expense
 
   const stats = [
-    { label: 'Total Income', value: formatCurrency(income) },
-    { label: 'Total Expenses', value: formatCurrency(expense) },
-    {
-      label: 'Balance',
-      value: formatCurrency(balance),
-    }
+    { label: 'Income', value: formatCurrency(income), color: 'var(--text-primary)' },
+    { label: 'Expenses', value: formatCurrency(expense), color: 'var(--text-primary)' },
+    { label: 'Balance', value: formatCurrency(balance), color: 'var(--text-primary)' },
+    { label: 'Budget', value: formatCurrency(Math.max(0, budgetLeft)), color: 'var(--text-primary)' }
   ]
 
   return (

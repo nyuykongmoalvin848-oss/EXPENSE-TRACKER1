@@ -1,4 +1,4 @@
- import { useState } from 'react'
+import { useState } from 'react'
 
 function BudgetForm({ onSubmit }) {
   const [amount, setAmount] = useState('')
