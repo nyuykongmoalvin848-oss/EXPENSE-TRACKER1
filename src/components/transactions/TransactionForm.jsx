@@ -32,15 +32,15 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
   }
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <div className="form-type">
-        <button type="button" className={form.type === 'income' ? 'active' : ''} onClick={() => set('type', 'income')}>Income</button>
-        <button type="button" className={form.type === 'expense' ? 'active' : ''} onClick={() => set('type', 'expense')}>Expense</button>
+    <form className='form' onSubmit={handleSubmit}>
+      <div className='form-type'>
+        <button type='button' className={form.type === 'income' ? 'active' : ''} onClick={() => set('type', 'income')}>Income</button>
+        <button type='button' className={form.type === 'expense' ? 'active' : ''} onClick={() => set('type', 'expense')}>Expense</button>
       </div>
 
-      <input type="text" placeholder="Description" value={form.description} onChange={(e) => set('description', e.target.value)} />
+      <input type='text' placeholder='Description' value={form.description} onChange={(e) => set('description', e.target.value)} />
 
-      <input type="number" placeholder="Amount" value={form.amount} onChange={(e) => set('amount', e.target.value)} />
+      <input type='number' placeholder='Amount' value={form.amount} onChange={(e) => set('amount', e.target.value)} />
 
       <select value={form.category} onChange={(e) => set('category', e.target.value)}>
         {categories.map((c) => (
@@ -48,15 +48,15 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
         ))}
       </select>
 
-      <input type="date" value={form.date} onChange={(e) => set('date', e.target.value)} />
+      <input type='date' value={form.date} onChange={(e) => set('date', e.target.value)} />
 
-      <input type="text" placeholder="Note (optional)" value={form.note} onChange={(e) => set('note', e.target.value)} />
+      <input type='text' placeholder='Note (optional)' value={form.note} onChange={(e) => set('note', e.target.value)} />
 
-      <div className="form-actions">
-        <button type="submit" className="submit">{isEdit ? 'Update' : 'Add'}</button>
-        {isEdit && <button type="button" className="cancel" onClick={onCancel}>Cancel</button>}
+      <div className='form-actions'>
+        <button type='submit' className='submit'>{isEdit ? 'Update' : 'Add'}</button>
+        {isEdit && <button type='button' className='cancel' onClick={onCancel}>Cancel</button>}
       </div>
-      {error && <p className="form-error">{error}</p>}
+      {error && <p className='form-error'>{error}</p>}
     </form>
   )
 }

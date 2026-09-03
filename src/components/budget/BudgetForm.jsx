@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function BudgetForm({ onSubmit }) {
+function BudgetForm ({ onSubmit }) {
   const [amount, setAmount] = useState('')
 
   const handleSubmit = (e) => {
@@ -11,14 +11,14 @@ function BudgetForm({ onSubmit }) {
   }
 
   return (
-    <form className="form budget-form" onSubmit={handleSubmit}>
+    <form className='form budget-form' onSubmit={handleSubmit}>
       <input
-        type="number"
-        placeholder="Monthly Budget"
+        type='number'
+        placeholder='Monthly Budget'
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
-      <button type="submit" className="submit">Set Budget</button>
+      <button type='submit' className='submit'>Set Budget</button>
     </form>
   )
 }
