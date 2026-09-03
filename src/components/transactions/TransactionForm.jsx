@@ -10,6 +10,7 @@ function emptyTx () {
 export default function TransactionForm ({ initial, onSubmit, onCancel }) {
   const { categories } = useCategories()
   const [form, setForm] = useState(emptyTx())
+  const [error, setError] = useState('')
   const isEdit = Boolean(initial)
 
   useEffect(() => {
@@ -20,8 +21,13 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!form.description || !form.amount) return
-    onSubmit({ ...form, amount: parseFloat(form.amount) })
+    const amount = parseFloat(form.amount)
+    if (!form.description || !form.amount || !Number.isFinite(amount) || amount <= 0) {
+      setError('Enter a valid amount greater than zero')
+      return
+    }
+    setError('')
+    onSubmit({ ...form, amount })
     if (!isEdit) setForm(emptyTx())
   }
 
@@ -50,6 +56,7 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
         <button type="submit" className="submit">{isEdit ? 'Update' : 'Add'}</button>
         {isEdit && <button type="button" className="cancel" onClick={onCancel}>Cancel</button>}
       </div>
+      {error && <p className="form-error">{error}</p>}
     </form>
   )
 }
