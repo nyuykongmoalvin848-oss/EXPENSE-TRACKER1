@@ -1,13 +1,14 @@
-export default function TransactionList({ transactions }) {
-  if (!transactions.length) return <p>No transactions yet.</p>
+import TransactionItem from './TransactionItem'
+
+export default function TransactionList ({ transactions, onEdit }) {
+  if (!transactions.length) {
+    return <p className='empty-state'>No transactions yet. Add one above to get started.</p>
+  }
 
   return (
     <ul className='list'>
       {transactions.map((t) => (
-        <li key={t.id} className={`list-item ${t.type}`}>
-          <span>{t.description}</span>
-          <span>{t.type === 'income' ? '+' : '-'}{Number(t.amount).toFixed(2)}</span>
-        </li>
+        <TransactionItem key={t.id} transaction={t} onEdit={onEdit} />
       ))}
     </ul>
   )
