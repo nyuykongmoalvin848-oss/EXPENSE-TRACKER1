@@ -1,26 +1,73 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useCategories } from '../../context/CategoriesContext'
+import { useBudget } from '../../context/BudgetContext'
+import { useTransactions } from '../../context/TransactionsContext'
 
-function BudgetForm ({ onSubmit }) {
+export default function BudgetForm () {
+  const { categories } = useCategories()
+  const { budgets, setBudget, removeBudget } = useBudget()
+  const { transactions } = useTransactions()
+  const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
   const [amount, setAmount] = useState('')
+
+  const now = new Date()
+  const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+
+  const spending = useMemo(() => {
+    const map = {}
+    transactions
+      .filter((t) => t.type === 'expense' && t.date.startsWith(month))
+      .forEach((t) => {
+        map[t.category] = (map[t.category] || 0) + Number(t.amount)
+      })
+    return map
+  }, [transactions, month])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!amount) return
-    onSubmit(parseFloat(amount))
+    if (!categoryId || !amount) return
+    setBudget(categoryId, Number(amount))
     setAmount('')
   }
 
   return (
-    <form className='form budget-form' onSubmit={handleSubmit}>
-      <input
-        type='number'
-        placeholder='Monthly Budget'
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button type='submit' className='submit'>Set Budget</button>
-    </form>
+    <section>
+      <h2>Monthly Budget</h2>
+      <form className='budget-form' onSubmit={handleSubmit}>
+        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+          {categories.map((c) => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
+        <input
+          type='number'
+          min='0'
+          step='0.01'
+          placeholder='Amount'
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button type='submit'>Set Budget</button>
+      </form>
+
+      <ul className='budget-list'>
+        {categories.map((c) => {
+          const limit = budgets[c.id] || 0
+          const spent = spending[c.id] || 0
+          const over = limit > 0 && spent > limit
+          return (
+            <li key={c.id} className={'budget-item' + (over ? ' over' : '')}>
+              <div>
+                <strong>{c.name}</strong>
+                <span> ${spent.toFixed(2)} / ${limit.toFixed(2)}</span>
+              </div>
+              {limit > 0 && (
+                <button type='button' onClick={() => removeBudget(c.id)}>Remove</button>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+    </section>
   )
 }
-
-export default BudgetForm

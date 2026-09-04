@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useCategories } from '../../context/CategoriesContext'
 
 const today = () => new Date().toISOString().split('T')[0]
@@ -7,15 +7,10 @@ function emptyTx () {
   return { description: '', amount: '', type: 'expense', category: 'food', date: today(), note: '' }
 }
 
-export default function TransactionForm ({ initial, onSubmit, onCancel }) {
+export default function TransactionForm ({ onSubmit }) {
   const { categories } = useCategories()
   const [form, setForm] = useState(emptyTx())
   const [error, setError] = useState('')
-  const isEdit = Boolean(initial)
-
-  useEffect(() => {
-    if (initial) setForm({ ...emptyTx(), ...initial })
-  }, [initial])
 
   const set = (key, value) => setForm({ ...form, [key]: value })
 
@@ -28,7 +23,7 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
     }
     setError('')
     onSubmit({ ...form, amount })
-    if (!isEdit) setForm(emptyTx())
+    setForm(emptyTx())
   }
 
   return (
@@ -53,8 +48,7 @@ export default function TransactionForm ({ initial, onSubmit, onCancel }) {
       <input type='text' placeholder='Note (optional)' value={form.note} onChange={(e) => set('note', e.target.value)} />
 
       <div className='form-actions'>
-        <button type='submit' className='submit'>{isEdit ? 'Update' : 'Add'}</button>
-        {isEdit && <button type='button' className='cancel' onClick={onCancel}>Cancel</button>}
+        <button type='submit' className='submit'>Add</button>
       </div>
       {error && <p className='form-error'>{error}</p>}
     </form>

@@ -6,12 +6,18 @@ const BudgetContext = createContext()
 export function BudgetProvider ({ children }) {
   const [budgets, setBudgets] = useLocalStorage('budgets', {})
 
-  const setCategoryBudget = (categoryId, amount) => {
+  const setBudget = (categoryId, amount) => {
     setBudgets({ ...budgets, [categoryId]: amount })
   }
 
+  const removeBudget = (categoryId) => {
+    const next = { ...budgets }
+    delete next[categoryId]
+    setBudgets(next)
+  }
+
   return (
-    <BudgetContext.Provider value={{ budgets, setCategoryBudget }}>
+    <BudgetContext.Provider value={{ budgets, setBudget, removeBudget }}>
       {children}
     </BudgetContext.Provider>
   )

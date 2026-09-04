@@ -3,23 +3,19 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 
 const CategoriesContext = createContext()
 
-const DEFAULT_Categories = [
-  { id: 'food', name: 'Food', colour: '#ef4444' },
-  { id: 'transport', name: 'Transport', colour: '#3b82f6' },
-  { id: 'housing', name: 'Housing', colour: '#10b981' },
-  { id: 'entertainment', name: 'Entertainment', colour: '#f59e0b' },
-  { id: 'other', name: 'Other', colour: '#6b7280' }
+const DEFAULT_CATEGORIES = [
+  { id: 'food', name: 'Food' },
+  { id: 'transport', name: 'Transport' },
+  { id: 'housing', name: 'Housing' },
+  { id: 'entertainment', name: 'Entertainment' },
+  { id: 'other', name: 'Other' }
 ]
 
 export function CategoriesProvider ({ children }) {
-  const [categories, setCategories] = useLocalStorage('categories', DEFAULT_Categories)
-
-  const addCategory = (name, colour) => {
-    setCategories([...categories, { id: Date.now().toString(), name, colour }])
-  }
+  const [categories, setCategories] = useLocalStorage('categories', DEFAULT_CATEGORIES)
 
   return (
-    <CategoriesContext.Provider value={{ categories, addCategory }}>
+    <CategoriesContext.Provider value={{ categories, setCategories }}>
       {children}
     </CategoriesContext.Provider>
   )

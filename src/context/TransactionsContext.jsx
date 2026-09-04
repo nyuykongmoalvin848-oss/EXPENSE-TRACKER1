@@ -10,10 +10,6 @@ export function TransactionsProvider ({ children }) {
     setTransactions([...transactions, { ...tx, id: Date.now().toString() }])
   }
 
-  const updateTransaction = (id, updates) => {
-    setTransactions(transactions.map((t) => (t.id === id ? { ...t, ...updates } : t)))
-  }
-
   const deleteTransaction = (id) => {
     if (window.confirm('Delete this transaction?')) {
       setTransactions(transactions.filter((t) => t.id !== id))
@@ -21,7 +17,7 @@ export function TransactionsProvider ({ children }) {
   }
 
   return (
-    <TransactionsContext.Provider value={{ transactions, addTransaction, updateTransaction, deleteTransaction }}>
+    <TransactionsContext.Provider value={{ transactions, addTransaction, deleteTransaction }}>
       {children}
     </TransactionsContext.Provider>
   )
