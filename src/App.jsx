@@ -18,7 +18,7 @@ function App () {
         <TransactionsProvider>
           <BudgetProvider>
             <BrowserRouter>
-              <Suspense fallback={<div className="loading-spinner">Loading application...</div>}>
+              <Suspense fallback={<div className='loading-spinner'>Loading application...</div>}>
                 <Routes>
                   <Route element={<Layout />}>
                     <Route index element={<DashboardPage />} />

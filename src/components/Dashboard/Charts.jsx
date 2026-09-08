@@ -57,21 +57,23 @@ function Charts ({ transactions }) {
 
       <div className='chart-card'>
         <h3 className='chart-title'>Spending by Category</h3>
-        {spendingByCategory.length === 0 ? (
-          <p className='empty-state'>No expenses yet.</p>
-        ) : (
-          <ResponsiveContainer width='100%' height={250}>
-            <PieChart>
-              <Pie data={spendingByCategory} cx='50%' cy='50%' outerRadius={80} dataKey='value' label>
-                {spendingByCategory.map((entry, i) => (
-                  <Cell key={`cat-${i}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        )}
+        {spendingByCategory.length === 0
+          ? (
+            <p className='empty-state'>No expenses yet.</p>
+            )
+          : (
+            <ResponsiveContainer width='100%' height={250}>
+              <PieChart>
+                <Pie data={spendingByCategory} cx='50%' cy='50%' outerRadius={80} dataKey='value' label>
+                  {spendingByCategory.map((entry, i) => (
+                    <Cell key={`cat-${i}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+            )}
       </div>
     </div>
   )

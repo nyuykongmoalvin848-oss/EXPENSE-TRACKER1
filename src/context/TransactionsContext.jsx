@@ -7,7 +7,6 @@ export function TransactionsProvider ({ children }) {
   const [transactions, setTransactions] = useLocalStorage('transactions', [])
 
   const addTransaction = (tx) => {
-    
     setTransactions([{ ...tx, id: crypto.randomUUID() }, ...transactions])
   }
 
