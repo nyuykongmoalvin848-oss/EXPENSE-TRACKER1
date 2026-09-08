@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useCategories } from '../../context/CategoriesContext'
 import { useBudget } from '../../context/BudgetContext'
 import { useTransactions } from '../../context/TransactionsContext'
+import { getCategoryColor } from '../../constants'
 
 export default function BudgetForm () {
   const { categories } = useCategories()
@@ -55,14 +56,34 @@ export default function BudgetForm () {
           const limit = budgets[c.id] || 0
           const spent = spending[c.id] || 0
           const over = limit > 0 && spent > limit
+          const pct = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0
+          const color = getCategoryColor(categories, c.id)
           return (
             <li key={c.id} className={'budget-item' + (over ? ' over' : '')}>
-              <div>
-                <strong>{c.name}</strong>
-                <span> ${spent.toFixed(2)} / ${limit.toFixed(2)}</span>
+              <div className='budget-item-header'>
+                <div>
+                  <strong>{c.name}</strong>
+                  <span> ${spent.toFixed(2)} / ${limit.toFixed(2)}</span>
+                </div>
+                {limit > 0 && (
+                  <button type='button' onClick={() => removeBudget(c.id)}>Remove</button>
+                )}
               </div>
               {limit > 0 && (
-                <button type='button' onClick={() => removeBudget(c.id)}>Remove</button>
+                <>
+                  <div
+                    className='progress'
+                    role='progressbar'
+                    aria-valuenow={pct}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div className='progress-fill' style={{ width: `${pct}%`, backgroundColor: color }} />
+                  </div>
+                  {over && (
+                    <span className='over-budget-text'>Over budget by ${(spent - limit).toFixed(2)}</span>
+                  )}
+                </>
               )}
             </li>
           )

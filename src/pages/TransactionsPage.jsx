@@ -10,13 +10,14 @@ export default function TransactionsPage () {
 
   const filtered = useMemo(() => {
     const search = filters.search.trim().toLowerCase()
-    return transactions.filter((t) => {
+    const matched = transactions.filter((t) => {
       if (filters.month && !t.date.startsWith(filters.month)) return false
       if (filters.type && t.type !== filters.type) return false
       if (filters.category && t.category !== filters.category) return false
       if (search && !(t.note || '').toLowerCase().includes(search)) return false
       return true
     })
+    return [...matched].sort((a, b) => b.date.localeCompare(a.date) || (Number(b.id) - Number(a.id)))
   }, [transactions, filters])
 
   return (

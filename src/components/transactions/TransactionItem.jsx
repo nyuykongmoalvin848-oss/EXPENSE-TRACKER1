@@ -1,12 +1,14 @@
 import { useCategories } from '../../context/CategoriesContext'
+import { getCategoryColor } from '../../constants'
 
 export default function TransactionItem ({ transaction, onDelete }) {
   const { categories } = useCategories()
   const cat = categories.find((c) => c.id === transaction.category)
+  const color = getCategoryColor(categories, transaction.category)
 
   return (
     <li className={`list-item ${transaction.type}`}>
-      <span className='cat-dot' />
+      <span className='cat-dot' style={{ backgroundColor: color }} />
       <div className='tx-info'>
         <span className='tx-desc'>{transaction.description}</span>
         <span className='tx-meta'>
