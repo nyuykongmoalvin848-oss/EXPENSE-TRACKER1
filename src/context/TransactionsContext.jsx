@@ -7,7 +7,7 @@ export function TransactionsProvider ({ children }) {
   const [transactions, setTransactions] = useLocalStorage('transactions', [])
 
   const addTransaction = (tx) => {
-    // Prepends the new transaction to the start of the array instead of appending it to the end
+    
     setTransactions([{ ...tx, id: crypto.randomUUID() }, ...transactions])
   }
 
