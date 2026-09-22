@@ -376,7 +376,7 @@ body {
   margin: 16px 0 8px;
 }
 
-@media (max-width: 600px) {
+@media (width <= 768px) {
   .wrap {
     padding: 16px;
   }
