@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: read
       statuses: write
+      pull-requests: write # 🔑 FIXES THE 403 ERROR: Allows posting summaries to your PR
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -24,3 +25,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_JAVASCRIPT_STANDARD: true
           VALIDATE_CSS: true
+         
