@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root {
   --bg-primary: #fff;
   --bg-secondary: #f3f4f6;
@@ -195,8 +199,8 @@ body {
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 16px;
 }
 
 .charts .recharts-pie-sector,
@@ -242,6 +246,11 @@ body {
   gap: 12px;
   margin-bottom: 24px;
   flex-wrap: wrap;
+}
+
+.form > * {
+  flex: 1 1 150px;
+  max-width: 100%;
 }
 
 .form-type {
